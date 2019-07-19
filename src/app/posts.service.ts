@@ -21,7 +21,7 @@ export class PostService{
     }
 
     fetchPost(){
-        this.http
+       return this.http
       .get
         <{[key: string]: Post}>('https://ng-complete-d55c5.firebaseio.com/posts.json')
       .pipe(
@@ -34,7 +34,6 @@ export class PostService{
               }
             }
             return postArray
-          })).subscribe(posts => {
-          })
+          }))
     }
 }
