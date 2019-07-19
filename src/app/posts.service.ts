@@ -36,4 +36,7 @@ export class PostService{
             return postArray
           }))
     }
+    deletePost(){
+        return this.http.delete('https://ng-complete-d55c5.firebaseio.com/posts.json')
+    }
 }
