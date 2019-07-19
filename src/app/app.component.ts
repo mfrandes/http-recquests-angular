@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Post } from './post.model';
 import { PostService } from './posts.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +13,7 @@ import { PostService } from './posts.service';
 export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
   isFetching = false;
+  error= null;
 
   constructor(private http: HttpClient,
     private postService: PostService) { }
@@ -21,7 +23,9 @@ export class AppComponent implements OnInit {
       posts => {
         this.isFetching = false;
         this.loadedPosts = posts
-      }
+      },  error => {
+        this.error= error.message;
+       }
     ) 
   }
 
@@ -32,12 +36,16 @@ export class AppComponent implements OnInit {
 
   onFetchPosts() {
     // Send Http request
+    this.isFetching = true;
     this.postService.fetchPost().subscribe(
       posts => {
         this.isFetching = false;
-        this.loadedPosts = posts
-      }
-    )
+        this.loadedPosts = posts;
+      }, error => {
+        this.error= error.message;
+        console.log(error);
+        
+       });
   }
 
   onClearPosts() {
